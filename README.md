@@ -1,2 +1,5 @@
-### screen - Inspect the grid of a site 
-Screen is a Chrome Extension which allows you to quickly check the layout of a site against a grid.
+### screen - Inspect the layout of a site. 
+
+**screen** (*verb*): To examine methodically in order to make a separation into different groups.
+
+**screen** is a Chrome Extension that allows you to quickly inspect the layout of a site.
