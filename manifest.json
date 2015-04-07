@@ -1,0 +1,23 @@
+{
+	"manifest_version": 2,
+
+	"name": "screen",
+	"description": "screen lets you check the layout of a site against a grid.",
+	"version" : "1.0.0",
+	
+	"browser_action": {
+		"default_icon": "icon.png",
+		"default_popup": "screen-popup.html",
+		"default_title": "screen - click for details"
+	},
+	"permissions": [
+		"activeTab",
+		"tabs", "http://www.google.com/*"
+	],
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["screen-main.js"]
+		}
+	]
+}
