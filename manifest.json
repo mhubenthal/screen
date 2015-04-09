@@ -2,14 +2,12 @@
 	"manifest_version": 2,
 	"name": "screen",
 	"version" : "1.0.0",
-	"default locale": "en",
 	"description": "screen - Inspect the layout of a site.",
-	"icons": {
-		"16": "images/screen-icon16.png",
-		"48": "images/screen-icon48.png",
-		"128": "images/screen-icon128.png",
-	},
-	// STOPPED HERE
+	//"icons": {
+		//"16": "images/screen-icon16.png",
+		//"48": "images/screen-icon48.png",
+		//"128": "images/screen-icon128.png"
+	//},
 	"browser_action": {
 		"default_icon": {
 			"19": "images/screen-icon19.png",
@@ -19,12 +17,14 @@
 		"default_title": "screen - click for details"
 	},
 	"permissions": [
-		"activeTab",
+		"activeTab"
 	],
 	"content_scripts": [
 		{
-			"matches": ["<all_urls>"],
+			"matches": ["http://*/*","https://*/*"],
+			"css": ["app/screen-styles.css"],
 			"js": ["app/screen-main.js"]
 		}
-	]
+	],
+	"web_accessible_resources": []
 }
