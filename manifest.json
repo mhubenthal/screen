@@ -1,23 +1,30 @@
 {
 	"manifest_version": 2,
-
 	"name": "screen",
-	"description": "screen lets you check the layout of a site against a grid.",
 	"version" : "1.0.0",
-	
+	"default locale": "en",
+	"description": "screen - Inspect the layout of a site.",
+	"icons": {
+		"16": "images/screen-icon16.png",
+		"48": "images/screen-icon48.png",
+		"128": "images/screen-icon128.png",
+	},
+	// STOPPED HERE
 	"browser_action": {
-		"default_icon": "icon.png",
-		"default_popup": "screen-popup.html",
+		"default_icon": {
+			"19": "images/screen-icon19.png",
+			"38": "images/screen-icon38.png"
+		},
+		"default_popup": "popup/screen-popup.html",
 		"default_title": "screen - click for details"
 	},
 	"permissions": [
 		"activeTab",
-		"tabs", "http://www.google.com/*"
 	],
 	"content_scripts": [
 		{
 			"matches": ["<all_urls>"],
-			"js": ["screen-main.js"]
+			"js": ["app/screen-main.js"]
 		}
 	]
 }
