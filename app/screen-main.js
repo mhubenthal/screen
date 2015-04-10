@@ -1,5 +1,3 @@
-chrome.browserAction.onClicked.addListener(function(tab) {
-	chrome.tabs.executeScxript({
-		code: 'document.body.style.backgroundColor="red"'
-	});
+chrome.runtime.sendMessage({greeting: 'hello'}, function(response) {
+	console.log(response.farewell);
 });
