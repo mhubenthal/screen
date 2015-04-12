@@ -19,12 +19,15 @@
 	"permissions": [
 		"activeTab"
 	],
-	"content_scripts": [
-		{
-			"matches": ["http://*/*","https://*/*"],
-			"css": ["app/screen-styles.css"],
-			"js": ["app/screen-main.js"]
-		}
-	],
+//	"content_scripts": [
+//		{
+//			"matches": ["http://*/*","https://*/*"],
+//			"css": ["app/screen-styles.css"],
+//			"js": ["app/screen-main.js"]
+//		}
+//	],
+	"background": {
+		"scripts": ["app/screen-main.js"]
+	},
 	"web_accessible_resources": []
 }
