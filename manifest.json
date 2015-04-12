@@ -13,21 +13,22 @@
 			"19": "images/screen-icon19.png",
 			"38": "images/screen-icon38.png"
 		},
-		"default_popup": "popup/screen-popup.html",
-		"default_title": "screen - click for details"
+		"default_title": "screen - click for details",
+		"default_popup": "html/screen-popup.html"
 	},
 	"permissions": [
 		"activeTab"
 	],
-//	"content_scripts": [
-//		{
-//			"matches": ["http://*/*","https://*/*"],
-//			"css": ["app/screen-styles.css"],
-//			"js": ["app/screen-main.js"]
-//		}
-//	],
+	"content_scripts": [
+		{
+			"matches": ["http://*/*","https://*/*"],
+			"js": ["js/screen-content.js"]
+		}
+	],
 	"background": {
-		"scripts": ["app/screen-main.js"]
+		"scripts": ["js/screen-background.js"],
+		"persistent": false
 	},
+	//"devtools_page": "screen-devtools.html",
 	"web_accessible_resources": []
 }
