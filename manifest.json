@@ -3,11 +3,6 @@
 	"name": "screen",
 	"version" : "1.0.0",
 	"description": "screen - Inspect the layout of a site.",
-	//"icons": {
-		//"16": "images/screen-icon16.png",
-		//"48": "images/screen-icon48.png",
-		//"128": "images/screen-icon128.png"
-	//},
 	"browser_action": {
 		"default_icon": {
 			"19": "images/screen-icon19.png",
@@ -28,7 +23,5 @@
 	"background": {
 		"scripts": ["js/screen-background.js"],
 		"persistent": false
-	},
-	//"devtools_page": "screen-devtools.html",
-	"web_accessible_resources": []
+	}
 }
