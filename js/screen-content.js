@@ -1,34 +1,37 @@
-/*window.addEventListener("load", function() {
-	chrome.extension.sendMessage({
-		type: "dom-loaded",
-		data: {
-			myProperty: "value"
-		}
-	});
-}, true);
-
-// Open up communication channel between page and extension
-var port = chrome.runtime.connect({name: "screen-channel"});
-//port.postMessage({myProperty: "testing out screen"});
-port.onMessage.addListener(function(msg) {
-	alert("1. from background-script: " + msg.myProperty);	
-});
-*/
-document.onreadystatechange = function(){
-if(document.readyState === 'complete') {
-	//makeScreenCanvas();
-	//console.log(window.document.body.style.backgroundColor);
-}
+document.onreadystatechange = function() {
+	if (document.readyState === 'complete') {
+		connectToPopup();
+	}
 };
 
-document.body.onload = makeScreenCanvas();
+function connectToPopup() {
+	// Open up communication channel between page and extension
+	var port = chrome.runtime.connect({name: 'screen-channel'});
+	port.postMessage({screenInit: true});
+	port.onMessage.addListener(function(msg) {
+		if (msg.command === 'showScreen') {
+			makeScreenCanvas();
+		} else if (msg.command === 'hideScreen') {
+			hideScreenCanvas();
+		} else {}
+	});
+}
+
+function hideScreenCanvas() {
+	var screenCanvas = document.getElementById('screenCanvas');
+	var ctx = screenCanvas.getContext('2d');
+	var currentWidth = window.innerWidth;
+	var currentHeight = window.innerHeight;
+	ctx.clearRect(0,0,currentWidth,currentHeight);
+}
 
 // Create screen canvas object, return canvas context for drawing to
 function makeScreenCanvas() {
 	var container = document.createElement('div');
+	container.id = 'screenContainer';
 	container.style.pointerEvents = 'none';
 	var screenCanvas = document.createElement('canvas');
-	screenCanvas.id = 'screen';
+	screenCanvas.id = 'screenCanvas';
 	var currentWidth = window.innerWidth;
 	var currentHeight = window.innerHeight;
 	screenCanvas.width = currentWidth;
