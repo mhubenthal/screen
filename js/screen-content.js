@@ -1,26 +1,20 @@
-// Open up communication channel between page and extension
-var port = chrome.runtime.connect({name: 'screen-channel'});
-port.postMessage({screenInit: true});
-console.log(port);
-port.onMessage.addListener(function(msg) {
-	alert('rcvd msg!');
-	if (msg.command === 'showScreen') {
+// Listen for commands from: popup html --> background script --> content script
+chrome.runtime.onMessage.addListener(function(msg, sender, sendresponse) {
+	if (msg.command && (msg.command === 'showScreen')) {
 		makeScreenCanvas();
-	} else if (msg.command === 'hideScreen') {
+	} else if (msg.command && (msg.command === 'hideScreen')) {
 		hideScreenCanvas();
 	} else {}
 });
 
-function hideScreenCanvas() {
-	var screenCanvas = document.getElementById('screenCanvas');
-	var ctx = screenCanvas.getContext('2d');
-	var currentWidth = window.innerWidth;
-	var currentHeight = window.innerHeight;
-	ctx.clearRect(0,0,currentWidth,currentHeight);
+// Hide screen canvas object
+function hideScreenCanvas(releaseFlagCallback) {
+	var screenContainer = document.getElementById('screenContainer');
+	document.body.removeChild(screenContainer);
 }
 
 // Create screen canvas object, return canvas context for drawing to
-function makeScreenCanvas() {
+function makeScreenCanvas(releaseFlagCallback) {
 	var container = document.createElement('div');
 	container.id = 'screenContainer';
 	container.style.pointerEvents = 'none';
@@ -46,6 +40,7 @@ function makeScreenCanvas() {
 	}
 }
 
+// Utility methods for canvas drawing
 function drawLine(canvasContext, startXY, endXY) {
 	canvasContext.beginPath();
 	canvasContext.moveTo(startXY[0], startXY[1]);
