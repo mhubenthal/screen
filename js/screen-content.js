@@ -1,21 +1,15 @@
-document.onreadystatechange = function() {
-	if (document.readyState === 'complete') {
-		connectToPopup();
-	}
-};
-
-function connectToPopup() {
-	// Open up communication channel between page and extension
-	var port = chrome.runtime.connect({name: 'screen-channel'});
-	port.postMessage({screenInit: true});
-	port.onMessage.addListener(function(msg) {
-		if (msg.command === 'showScreen') {
-			makeScreenCanvas();
-		} else if (msg.command === 'hideScreen') {
-			hideScreenCanvas();
-		} else {}
-	});
-}
+// Open up communication channel between page and extension
+var port = chrome.runtime.connect({name: 'screen-channel'});
+port.postMessage({screenInit: true});
+console.log(port);
+port.onMessage.addListener(function(msg) {
+	alert('rcvd msg!');
+	if (msg.command === 'showScreen') {
+		makeScreenCanvas();
+	} else if (msg.command === 'hideScreen') {
+		hideScreenCanvas();
+	} else {}
+});
 
 function hideScreenCanvas() {
 	var screenCanvas = document.getElementById('screenCanvas');

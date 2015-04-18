@@ -3,19 +3,19 @@ document.onreadystatechange = function() {
 		chrome.runtime.onConnect.addListener(function(port) {
  			port.onMessage.addListener(function(msg) {
  	  			if (msg.action === 'showScreen') {
-					showScreen();	
+					showScreen(port);	
 				} else if (msg.action === 'hideScreen') {
-					hideScreen();
+					hideScreen(port);
 				}	 
 			});
 		});
 	}
 };
 
-function showScreen() {
-	port.postMessage({command: 'showScreen'});
+function showScreen(thePort) {
+	thePort.postMessage({command: 'showScreen'});
 }
 
-function hideScreen() {
-	port.postMessage({command: 'hideScreen'});
+function hideScreen(thePort) {
+	thePort.postMessage({command: 'hideScreen'});
 }	
