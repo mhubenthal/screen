@@ -20,8 +20,8 @@ function makeScreenCanvas(releaseFlagCallback) {
 	container.style.pointerEvents = 'none';
 	var screenCanvas = document.createElement('canvas');
 	screenCanvas.id = 'screenCanvas';
-	var currentWidth = window.innerWidth;
-	var currentHeight = window.innerHeight;
+	var currentWidth = window.document.body.offsetWidth;
+	var currentHeight = window.document.body.offsetHeight;
 	screenCanvas.width = currentWidth;
 	screenCanvas.height = currentHeight;
 	screenCanvas.style.position = 'absolute';
