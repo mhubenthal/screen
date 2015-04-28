@@ -5,24 +5,30 @@ chrome.runtime.onConnect.addListener(function(port) {
 	// Only connect to popup port	
 	if(port.name === 'screen-popup-port'){ 	
 		port.onMessage.addListener(function(msg) {
- 	 		if (msg.action && (msg.action === 'showScreen')) {
-				showScreen();	
-			} else if (msg.action && (msg.action === 'hideScreen')) {
-				hideScreen();
+ 	 		if (msg.action && (msg.action === 'drawScreen')) {
+				drawScreen();	
+			} else if (msg.action && (msg.action === 'pauseScreen')) {
+				pauseScreen();
+			} else if (msg.action && (msg.action === 'clearScreen')) {
+				clearScreen();
 			}	 
 		});
 	}
 });
 
 // App method calls to content scripts
-function showScreen(releaseFlagCallback) {
+function drawScreen() {
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.sendMessage(tabs[0].id, {command: 'showScreen'}, function(response){});
+		chrome.tabs.sendMessage(tabs[0].id, {command: 'drawScreen'}, function(response){});
 	});
 }
-
-function hideScreen(releaseFlagCallback) {
+function pauseScreen() {
 	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
-		chrome.tabs.sendMessage(tabs[0].id, {command: 'hideScreen'}, function(response){});
+		chrome.tabs.sendMessage(tabs[0].id, {command: 'pauseScreen'}, function(response){});
+	});
+}
+function clearScreen() {
+	chrome.tabs.query({active: true, currentWindow: true}, function(tabs){
+		chrome.tabs.sendMessage(tabs[0].id, {command: 'clearScreen'}, function(response){});
 	});
 }	

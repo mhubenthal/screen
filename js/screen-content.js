@@ -1,19 +1,43 @@
 // Listen for commands from: popup html --> background script --> content script
 chrome.runtime.onMessage.addListener(function(msg, sender, sendresponse) {
-	if (msg.command && (msg.command === 'showScreen')) {
+	if (msg.command && (msg.command === 'drawScreen')) {
 		// First time using screen on page, call init() function
 		if(document.getElementById('screenContainer') === null){
 			screenInit();
-		}
-	} else if (msg.command && (msg.command === 'hideScreen')) {
-		hideScreenCanvas();
-	} else {}
+		} 
+    // Screen already exists on page, make pointer events normal to allow editing of current screen
+    else{
+      var screenContainer = document.getElementById('screenContainer');
+      var screenCanvas = document.getElementById('screenCanvas');
+      screenContainer.style.pointerEvents = 'auto';
+      screenCanvas.style.pointerEvents = 'auto';
+    }
+	} 
+  else if (msg.command && (msg.command === 'pauseScreen')) {
+    // screen canvas is not present to pause, do nothing
+    if(document.getElementById('screenContainer') === null){
+    } 
+    else{
+		  pauseScreenCanvas();
+    }
+	} 
+  else if (msg.command && (msg.command === 'clearScreen')) {
+    clearScreenCanvas();
+  }
 });
 
+// Pause screen canvas, let mouse events fall throught to main page
+function pauseScreenCanvas() {
+  var screenContainer = document.getElementById('screenContainer');
+  var screenCanvas = document.getElementById('screenCanvas');
+  screenContainer.style.pointerEvents = 'none';
+  screenCanvas.style.pointerEvents = 'none';
+}
+
 // Hide screen canvas object
-function hideScreenCanvas() {
+function clearScreenCanvas() {
 	var screenCanvas = (document.getElementById('screenCanvas')).getContext('2d');
-	
+	// clearRect with canvas x,y,w,h
 }
 
 // By Simon Sarris
@@ -92,7 +116,7 @@ function CanvasState(canvas) {
   // Since we still want to use this particular CanvasState in the events we have to save a reference to it.
   // This is our reference!
   var myState = this;
-  
+  console.log(canvas);
   //fixes a problem where double clicking causes text to get selected on the canvas
   canvas.addEventListener('selectstart', function(e) { e.preventDefault(); return false; }, false);
   // Up, down, and move are for dragging
@@ -224,7 +248,6 @@ CanvasState.prototype.getMouse = function(e) {
 function screenInit() {
 	var container = document.createElement('div');
 	container.id = 'screenContainer';
-	container.style.pointerEvents = 'none';
 	var screenCanvas = document.createElement('canvas');
 	screenCanvas.id = 'screenCanvas';
 	var currentWidth = window.document.body.offsetWidth;
@@ -235,7 +258,6 @@ function screenInit() {
 	screenCanvas.style.zIndex = '10000';
 	screenCanvas.style.top = '0';
 	screenCanvas.style.left = '0';
-	screenCanvas.style.pointerEvents = 'none';
 	container.appendChild(screenCanvas);
 	document.body.appendChild(container);
 	var s = new CanvasState(document.getElementById('screenCanvas'));

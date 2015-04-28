@@ -7,15 +7,19 @@ document.onreadystatechange = function() {
 
 // Attach listeners to popup
 function runPopup() {
-	var showBtn = document.getElementById('show-screen');
-	var hideBtn = document.getElementById('hide-screen');
+	var drawBtn = document.getElementById('draw-screen');
+	var pauseBtn = document.getElementById('pause-screen');
+	var clearBtn = document.getElementById('clear-screen');
 	// Create popup port
 	var port = chrome.runtime.connect({name: 'screen-popup-port'});
-	showBtn.onclick = function() {
-			port.postMessage({action: 'showScreen'});
+	drawBtn.onclick = function() {
+			port.postMessage({action: 'drawScreen'});
 	};
-	hideBtn.onclick = function() {
-			port.postMessage({action: 'hideScreen'});
+	pauseBtn.onclick = function() {
+			port.postMessage({action: 'pauseScreen'});
+	};
+	clearBtn.onclick = function() {
+			port.postMessage({action: 'clearScreen'});
 	};	
 }
 
