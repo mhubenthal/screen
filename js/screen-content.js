@@ -261,9 +261,16 @@ function screenInit() {
 	container.appendChild(screenCanvas);
 	document.body.appendChild(container);
 	var s = new CanvasState(document.getElementById('screenCanvas'));
-	s.addShape(new Shape(40,40,50,50)); // The default is gray
-	s.addShape(new Shape(60,140,40,60, 'lightskyblue'));
-	// Lets make some partially transparent
-	s.addShape(new Shape(80,150,60,30, 'rgba(127, 255, 212, .5)'));
-	s.addShape(new Shape(125,80,30,80, 'rgba(245, 222, 179, .7)'));
+  // Draw vertical ruler along left edge
+  s.addShape(new Shape(0,0,10,currentHeight, 'rgba(127, 255, 212, .5)'));
+  // Draw horizontal ruler 
+  s.addShape(new Shape(0,0,currentWidth,10, 'rgba(127, 255, 212, .5)'));
+  // Draw vertical tic marks
+  for(var i = 10; i < currentHeight; i+=10){
+    s.addShape(new Shape(0,i,10,2, 'rgba(0, 0, 0, .5)'));
+  }
+  // Draw horizontal tic marks
+  for(var j = 10; j < currentWidth; j+=10){
+    s.addShape(new Shape(j,0,2,10, 'rgba(0, 0, 0, .5)'));
+  }
 }
